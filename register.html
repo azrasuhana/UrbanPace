@@ -1,0 +1,375 @@
+<!<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UrbanPace | 21KM Registration</title>
+    
+    <style>
+        /* Font import mesti di dalam style tag */
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Open+Sans:wght@400;600&family=Oswald:wght@500;700&display=swap');
+
+        :root { --crimson: #990000; --dark: #1a1a1a; }
+        
+        body { 
+            font-family: 'Open Sans', sans-serif; 
+            margin: 0; 
+            background: url('Homepage.jpg') no-repeat center center fixed; 
+            background-size: cover;
+            color: #333;
+        }
+
+        .overlay { background: rgba(0, 0, 0, 0.7); min-height: 100vh; padding: 40px 20px; box-sizing: border-box; }
+
+        /* Hamburger Menu */
+        .menu-btn { position: fixed; top: 20px; left: 20px; z-index: 1001; cursor: pointer; background: var(--crimson); padding: 10px; border-radius: 5px; }
+        .menu-btn div { width: 25px; height: 3px; background: white; margin: 5px; }
+        .side-nav { height: 100%; width: 0; position: fixed; z-index: 1000; top: 0; left: 0; background: #111; overflow-x: hidden; transition: 0.5s; padding-top: 60px; }
+        .side-nav a { padding: 15px 30px; text-decoration: none; font-size: 1.1rem; color: #ccc; display: block; font-family: 'Oswald', sans-serif; text-transform: uppercase; }
+        .side-nav a:hover { background: var(--crimson); color: white; }
+
+        .container { max-width: 850px; margin: auto; background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        
+        /* Info Header */
+        .info-header { background: var(--crimson); color: white; padding: 40px; text-align: center; }
+        .info-header h1 { 
+            margin: 0; 
+            font-family: 'Montserrat', sans-serif; 
+            font-size: 2.5rem; 
+            font-weight: 900; 
+            text-transform: uppercase; 
+            letter-spacing: 2px; 
+        }
+        .info-content { padding: 30px; text-align: center; background: #fff; }
+        .info-content p { font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 1px; color: #555; }
+        
+        .price-text { 
+            font-family: 'Montserrat', sans-serif; 
+            font-size: 3.5rem; 
+            font-weight: 800; 
+            color: var(--crimson); 
+            margin: 15px 0; 
+        }
+        
+        .section { padding: 40px; display: none; }
+        .active { display: block; }
+
+        h2 { 
+            font-family: 'Montserrat', sans-serif; 
+            font-weight: 800; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+            margin-bottom: 20px;
+        }
+
+        /* T&C Box */
+        .tc-container { height: 300px; overflow-y: scroll; border: 1px solid #ddd; padding: 20px; background: #f9f9f9; font-size: 0.9rem; line-height: 1.6; text-align: left; margin-bottom: 20px; border-radius: 5px; }
+
+        /* Forms */
+        label { 
+            display: block; 
+            margin: 15px 0 5px; 
+            font-weight: 600; 
+            font-size: 0.85rem; 
+            font-family: 'Oswald', sans-serif; 
+            text-transform: uppercase; 
+            color: #444;
+        }
+        input, select, textarea { 
+            width: 100%; 
+            padding: 12px; 
+            border: 1px solid #ccc; 
+            border-radius: 5px; 
+            box-sizing: border-box; 
+            font-size: 1rem; 
+            font-family: 'Open Sans', sans-serif;
+        }
+        .checkbox-group { display: flex; align-items: center; gap: 10px; font-size: 0.95rem; margin: 20px 0; font-weight: 600; }
+        .checkbox-group input { width: auto; }
+
+        /* Product Add-ons Grid */
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; margin-top: 20px; }
+        .product-item { border: 1px solid #eee; padding: 12px; text-align: center; border-radius: 10px; background: #fdfdfd; transition: 0.3s; }
+        .prod-img { width: 100%; height: 80px; background: #fff; border-radius: 5px; margin-bottom: 8px; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 1px solid #eee; }
+        .prod-img img { width: 100%; height: 100%; object-fit: contain; }
+        .product-item span:first-of-type { font-family: 'Oswald', sans-serif; font-weight: 500; text-transform: uppercase; }
+        
+        /* Banking UI - Cleaned up */
+        .bank-list { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 25px 0; }
+        .bank-item { 
+            border: 1px solid #ddd; 
+            padding: 18px; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+            gap: 15px; 
+            background: #fff; 
+            transition: 0.3s;
+            font-family: 'Oswald', sans-serif;
+            font-size: 1rem;
+            text-transform: uppercase;
+        }
+        .bank-item:hover { border-color: var(--crimson); background: #fff5f5; }
+        .bank-item input { width: auto; cursor: pointer; }
+
+        .btn { 
+            font-family: 'Oswald', sans-serif;
+            background: var(--crimson); 
+            color: white; 
+            padding: 16px 30px; 
+            border: none; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            font-size: 1.1rem; 
+            font-weight: 700; 
+            width: 100%; 
+            transition: 0.3s; 
+            margin-top: 10px; 
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .btn:hover { background: #7a0000; transform: translateY(-2px); }
+        .btn-skip { background: #555; margin-top: 8px; font-size: 0.9rem; }
+
+        /* Slip Design */
+        #slip-box { 
+            display: none; 
+            padding: 40px; 
+            background: white; 
+            border: 3px solid var(--crimson); 
+            border-radius: 15px; 
+            color: black; 
+            font-family: 'Open Sans', sans-serif;
+        }
+        .slip-header { border-bottom: 2px solid #333; padding-bottom: 15px; margin-bottom: 20px; text-align: center; }
+        .slip-header h1 { font-family: 'Montserrat', sans-serif; font-weight: 900; }
+        
+        #finalTotal { font-family: 'Montserrat', sans-serif; }
+
+        @media print { 
+            body * { visibility: hidden; } 
+            #slip-box, #slip-box * { visibility: visible; } 
+            #slip-box { position: absolute; left: 0; top: 0; width: 100%; border: none; } 
+            .btn { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="overlay">
+    <div class="menu-btn" onclick="openNav()">
+        <div></div><div></div><div></div>
+    </div>
+    <div id="sideNav" class="side-nav">
+        <a href="index.html">Home</a>
+        <a href="register.html">Registration</a>
+        <a href="product.html">Product & Service</a>
+        <a href="contact.html">Contact Us</a>
+    </div>
+
+    <div class="container">
+        <div id="step1" class="section active">
+            <div class="info-header">
+                <h1>Marathon Urban Pace 21Km</h1>
+            </div>
+            <div class="info-content">
+                <p>Fees is subject to admin fee | Open to all nationalities</p>
+                <div class="price-text">MYR 50.00</div>
+                <p style="color: #666; font-family: 'Open Sans', sans-serif; text-transform: none;"><strong>Now registering:</strong> Nov 1 - Feb 8</p>
+                <button class="btn" onclick="nextStep(2)">REGISTER NOW</button>
+            </div>
+        </div>
+
+        <div id="step2" class="section">
+            <h2 style="color:var(--crimson)">Terms & Conditions</h2>
+            <div class="tc-container">
+                <p>• The Organiser reserves the right to limit, accept or reject any entries without assigning any reasons thereof.</p>
+                <p>• All participants are required to complete the Online Registration entry form with accurate and correct information.</p>
+                <p>• Once the registration is being processed, there will be NO REFUND for those who fail to show up for the race and/or withdraw from it.</p>
+                <p>• The race registration will only confirm when full payment of the race entry fee has been made.</p>
+                <p>• Race entry is not transferable.</p>
+                <p>• Strictly NO CHANGES of name after registration is completed.</p>
+                <p>• On-the-spot entries will NOT be entertained.</p>
+                <p>• Participants partake in this event at their own risk and the Organiser shall not be liable for any bodily injuries, loss and/or damage to property.</p>
+                <p>• The Organiser reserves the right to use any photographs or recordings of the participants for commercial or advertising purposes.</p>
+                <p>• The Race Director/Organising Committee decision is final.</p>
+                <p>• Participants who do not collect their Race Pack during the scheduled date and time will be forfeited.</p>
+                <p>• A grace period of 15 minutes after the commencement of the race will be given for latecomers.</p>
+                <p>• Minimum age for Half Marathon is 16 years of age on 31 December 2026.</p>
+                <p>• Cut off time for Half Marathon (21KM) Distance Race is 4 hours.</p>
+            </div>
+            <div class="checkbox-group">
+                <input type="checkbox" id="agreeCheck">
+                <label for="agreeCheck" style="margin:0; text-transform:none; font-family:'Open Sans', sans-serif;">I agree to the Terms & Conditions above</label>
+            </div>
+            <button class="btn" onclick="validateTC()">PROCEED TO FORM</button>
+        </div>
+
+        <div id="step3" class="section">
+            <h2 style="color:var(--crimson)">Registration Details</h2>
+            <form id="regForm">
+                <label>Full Name (as per IC/Passport)</label>
+                <input type="text" id="fullName" placeholder="Enter your full name" required>
+                
+                <div style="display:flex; gap:15px;">
+                    <div style="flex:1">
+                        <label>Contact Number</label>
+                        <input type="text" id="phone" placeholder="Example: 0123456789" required>
+                    </div>
+                    <div style="flex:1">
+                        <label>Emergency Contact No.</label>
+                        <input type="text" id="emergency" placeholder="Emergency Phone No." required>
+                    </div>
+                </div>
+
+                <label>Email Address</label>
+                <input type="email" id="email" placeholder="email@example.com" required>
+
+                <div style="display:flex; gap:15px;">
+                    <div style="flex:1">
+                        <label>Gender</label>
+                        <select id="gender">
+                            <option>Male</option>
+                            <option>Female</option>
+                        </select>
+                    </div>
+                    <div style="flex:1">
+                        <label>Occupation</label>
+                        <input type="text" id="occupation" placeholder="Your Job">
+                    </div>
+                </div>
+
+                <label>Medical Condition (Type 'NONE' if healthy)</label>
+                <textarea id="health" rows="2" placeholder="Asthma, Heart Issues, etc."></textarea>
+
+                <button type="button" class="btn" onclick="nextStep(4)">NEXT: ADD-ONS</button>
+            </form>
+        </div>
+
+        <div id="step4" class="section">
+            <h2 style="color:var(--crimson)">Official Merchandise</h2>
+            <p style="font-size:0.9rem; font-family:'Open Sans'">Add items to your registration or skip to continue.</p>
+            <div class="product-grid" id="productGrid">
+                <script>
+                    const products = [
+                        {n: 'Energy Gel', p: 10, img: 'energygel.jpg'}, 
+                        {n: 'Energy Drink', p: 5, img: 'energy drink.jpg'}, 
+                        {n: 'Energy Bar', p: 8, img: 'energybar.jpg'},
+                        {n: 'Shoes', p: 299, img: 'runningshoes.jpg'}, 
+                        {n: 'Cap', p: 45, img: 'cap.jpg'}, 
+                        {n: 'Waterbag', p: 85, img: 'waterbag.jpg'},
+                        {n: 'Stocking', p: 15, img: 'compressionsupport.jpg'}, 
+                        {n: 'Running Tights', p: 75, img: 'tight.jpg'}, 
+                        {n: 'Compression Wear', p: 120, img: 'compressionsupport.jpg'},
+                        {n: 'Sunglasses', p: 65, img: 'spec.jpg'}, 
+                        {n: 'Running Watch', p: 199, img: 'watch.jpg'}
+                    ];
+                    document.write(products.map(prod => `
+                        <div class="product-item">
+                            <div class="prod-img">
+                                <img src="${prod.img}" alt="${prod.n}" onerror="this.src='https://via.placeholder.com/80?text=No+Image'">
+                            </div>
+                            <span style="font-size:0.75rem; display:block; height:32px; overflow:hidden">${prod.n}</span>
+                            <span style="color:var(--crimson); font-weight:bold; font-family:'Montserrat'">RM${prod.p}</span>
+                            <input type="number" class="prod-qty" data-name="${prod.n}" data-price="${prod.p}" value="0" min="0" style="margin-top:8px; padding:4px; text-align:center">
+                        </div>
+                    `).join(''));
+                </script>
+            </div>
+            <button class="btn" onclick="nextStep(5)">GO TO PAYMENT</button>
+            <button class="btn btn-skip" onclick="skipAddons()">SKIP & PAY RM50 ONLY</button>
+        </div>
+
+        <div id="step5" class="section">
+            <h2 style="color:var(--crimson)">Online Banking</h2>
+            <div style="background:#f9f9f9; padding:30px; border-radius:10px; text-align:center; margin-bottom:25px; border: 1px solid #eee;">
+                <span style="color:#666; font-family:'Oswald'; text-transform:uppercase; letter-spacing:1px;">Total Amount Payable</span><br>
+                <strong style="color:var(--crimson); font-size:3rem">RM <span id="finalTotal">50.00</span></strong>
+            </div>
+            
+            <label>Choose Your Bank</label>
+            <div class="bank-list">
+                <div class="bank-item"><input type="radio" name="bank" checked> Maybank2u</div>
+                <div class="bank-item"><input type="radio" name="bank"> CIMB Clicks</div>
+                <div class="bank-item"><input type="radio" name="bank"> Bank Islam</div>
+                <div class="bank-item"><input type="radio" name="bank"> RHB Now</div>
+                <div class="bank-item"><input type="radio" name="bank"> Public Bank</div>
+                <div class="bank-item"><input type="radio" name="bank"> Hong Leong Bank</div>
+            </div>
+
+            <button class="btn" onclick="processPayment()">CONFIRM & PAY NOW</button>
+            <audio id="paymentMusic" src="song.mp4"></audio>
+        </div>
+
+        <div id="slip-box">
+            <div class="slip-header">
+                <h1 style="margin:0; color:var(--crimson)">URBANPACE OFFICIAL SLIP</h1>
+                <p style="margin:5px 0; font-family:'Oswald'; text-transform:uppercase;">Race Entry: 21KM Half Marathon</p>
+            </div>
+            <div id="slipContent" style="line-height:1.8"></div>
+            <hr style="border:1px dashed #ccc; margin:20px 0">
+            <p style="font-size:0.8rem; text-align:center">Generated on: <span id="slipDate"></span><br>
+            Please present this slip at the Race Pack Collection counter.</p>
+            <button class="btn" onclick="window.print()" style="width: auto; display:block; margin: 20px auto 0;">PRINT SLIP</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function openNav() { document.getElementById("sideNav").style.width = "250px"; }
+    function nextStep(step) {
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.getElementById('step' + step).classList.add('active');
+        if(step === 5) calculateTotal();
+        window.scrollTo(0,0);
+    }
+    function validateTC() {
+        if(document.getElementById('agreeCheck').checked) nextStep(3);
+        else alert("Please agree to the Terms & Conditions.");
+    }
+    function skipAddons() {
+        document.querySelectorAll('.prod-qty').forEach(q => q.value = 0);
+        nextStep(5);
+    }
+    function calculateTotal() {
+        let addonTotal = 0;
+        document.querySelectorAll('.prod-qty').forEach(input => {
+            let qty = parseInt(input.value);
+            if(qty > 0) addonTotal += (qty * parseInt(input.getAttribute('data-price')));
+        });
+        document.getElementById('finalTotal').innerText = (50 + addonTotal).toFixed(2);
+    }
+    function processPayment() {
+        const music = document.getElementById('paymentMusic');
+        music.play().catch(e => console.log("Audio play blocked"));
+        setTimeout(() => {
+            alert("Payment Successful! Here is your entry slip.");
+            generateSlip();
+        }, 1200);
+    }
+    function generateSlip() {
+        const name = document.getElementById('fullName').value;
+        const phone = document.getElementById('phone').value;
+        const em = document.getElementById('emergency').value;
+        const total = document.getElementById('finalTotal').innerText;
+        let selected = [];
+        document.querySelectorAll('.prod-qty').forEach(i => {
+            if(parseInt(i.value) > 0) selected.push(`${i.dataset.name} (x${i.value})`);
+        });
+        document.getElementById('slipContent').innerHTML = `
+            <p><strong>Registration ID:</strong> UP-21KM-${Math.floor(10000 + Math.random() * 90000)}</p>
+            <p><strong>Participant Name:</strong> ${name.toUpperCase()}</p>
+            <p><strong>Contact Number:</strong> ${phone}</p>
+            <p><strong>Emergency Contact:</strong> ${em}</p>
+            <p><strong>Add-ons:</strong> ${selected.length > 0 ? selected.join(', ') : 'None'}</p>
+            <h3 style="color:var(--crimson); font-family:'Montserrat';">Total Amount Paid: RM ${total}</h3>
+        `;
+        document.getElementById('slipDate').innerText = new Date().toLocaleString();
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.getElementById('slip-box').style.display = 'block';
+    }
+</script>
+
+</body>
+</html>

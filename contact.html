@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UrbanPace | Contact Us</title>
+    <style>
+        /* Import Fonts selari dengan Page 1 & 2 */
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Open+Sans:wght@400;600&family=Oswald:wght@500;700&display=swap');
+
+        :root { 
+            --crimson: #990000; 
+            --dark-bg: #111;
+        }
+
+        body { 
+            font-family: 'Open Sans', sans-serif; 
+            margin: 0; 
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('Homepage.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #333;
+            text-align: center;
+            min-height: 100vh;
+        }
+
+        /* Navigation Sidebar */
+        .menu-btn { position: fixed; top: 20px; left: 20px; z-index: 1001; cursor: pointer; background: var(--crimson); padding: 10px; border-radius: 5px; }
+        .menu-btn div { width: 25px; height: 3px; background: white; margin: 5px 0; }
+        .side-nav { height: 100%; width: 0; position: fixed; z-index: 1000; top: 0; left: 0; background-color: var(--dark-bg); overflow-x: hidden; transition: 0.5s; padding-top: 60px; }
+        .side-nav a { padding: 15px 30px; text-decoration: none; font-size: 1.1rem; color: #ccc; display: block; text-align: left; font-family: 'Oswald', sans-serif; text-transform: uppercase; }
+        .side-nav a:hover { color: white; background: var(--crimson); }
+
+        .container { max-width: 900px; margin: 80px auto 40px; padding: 20px; }
+
+        h1 { 
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.8rem; 
+            color: #fff; 
+            margin-bottom: 10px; 
+            font-weight: 900; 
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.5); 
+        }
+        .subtitle { 
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.2rem; 
+            color: #ddd; 
+            margin-bottom: 40px; 
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Contact Cards Grid */
+        .contact-grid { display: grid; grid-template-columns: 1fr; gap: 30px; }
+        .contact-card { 
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px; 
+            border-radius: 20px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2); 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center;
+            transition: 0.3s ease;
+            border: 1px solid #eee;
+        }
+        .contact-card:hover { transform: translateY(-10px); background: rgba(255, 255, 255, 1); }
+
+        .circle-img { 
+            width: 140px; 
+            height: 140px; 
+            border-radius: 50%; 
+            object-fit: cover; 
+            border: 5px solid var(--crimson);
+            margin-bottom: 25px;
+            background-color: #f0f0f0;
+        }
+
+        .contact-card h2 { 
+            font-family: 'Montserrat', sans-serif;
+            margin: 10px 0; 
+            font-size: 1.5rem; 
+            color: var(--dark-bg); 
+            text-transform: uppercase;
+            font-weight: 800;
+        }
+        .contact-card p { 
+            font-family: 'Open Sans', sans-serif;
+            color: #555; 
+            max-width: 550px; 
+            margin: 0 auto 25px; 
+            font-size: 1rem; 
+            line-height: 1.6; 
+        }
+        
+        .whatsapp-btn { 
+            font-family: 'Oswald', sans-serif;
+            background: #25D366; 
+            color: white; 
+            padding: 14px 40px; 
+            text-decoration: none; 
+            border-radius: 50px; 
+            font-weight: bold; 
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .whatsapp-btn:hover { background: #128C7E; box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4); }
+
+        /* SOS Button Section */
+        .sos-section { 
+            margin-top: 60px; 
+            padding: 40px; 
+            background: rgba(255, 245, 245, 0.9); 
+            border-radius: 20px; 
+            border: 3px dashed var(--crimson);
+        }
+        .sos-section h2 {
+            font-family: 'Montserrat', sans-serif;
+        }
+        .sos-btn { 
+            font-family: 'Montserrat', sans-serif;
+            background: var(--crimson); 
+            color: white; 
+            width: 120px; 
+            height: 120px; 
+            border-radius: 50%; 
+            border: none; 
+            font-size: 1.4rem;
+            font-weight: 900; 
+            cursor: pointer; 
+            box-shadow: 0 0 0 0 rgba(153, 0, 0, 0.7);
+            animation: pulse 1.5s infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px auto;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(153, 0, 0, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 25px rgba(153, 0, 0, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(153, 0, 0, 0); }
+        }
+
+        footer { 
+            font-family: 'Oswald', sans-serif;
+            background: #000; 
+            color: #888; 
+            padding: 30px; 
+            margin-top: 60px; 
+            font-size: 0.9rem; 
+            border-top: 3px solid var(--crimson); 
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="menu-btn" onclick="toggleNav()">
+        <div></div><div></div><div></div>
+    </div>
+
+    <div id="sideNav" class="side-nav">
+        <a href="index.html">Home</a>
+        <a href="register.html">Registration</a>
+        <a href="products.html">Product & Service</a>
+        <a href="contact.html">Contact Us</a>
+    </div>
+
+    <div class="container">
+        <h1>How can we help you?</h1>
+        <p class="subtitle">Our team is here to support your journey.</p>
+
+        <div class="contact-grid">
+            <div class="contact-card">
+                <img src="question.jpg" alt="Event Questions" class="circle-img" onerror="this.src='https://via.placeholder.com/140?text=Event+Team'">
+                <h2>Questions about the event</h2>
+                <p>Looking for event details such as packet pick up, schedule of events, or transfer and refund queries?</p>
+                <a href="https://wa.me/60182031549?text=Hi! I have a question regarding the event logistics and schedule." class="whatsapp-btn" target="_blank">Contact Event Organiser</a>
+            </div>
+
+            <div class="contact-card">
+                <img src="technical.jpg" alt="Technical Support" class="circle-img" onerror="this.src='https://via.placeholder.com/140?text=Tech+Support'">
+                <h2>Technical Support</h2>
+                <p>Having trouble with the registration platform such as making payment or system errors?</p>
+                <a href="https://wa.me/60182031549?text=Hi! I need help with a technical issue on the registration platform." class="whatsapp-btn" target="_blank">Contact Urban Pace</a>
+            </div>
+        </div>
+
+        <div class="sos-section">
+            <h2 style="color:var(--crimson); margin-top:0; font-weight:900; text-transform: uppercase;">EMERGENCY SOS</h2>
+            <p style="color: #444;">Injured or facing an emergency while running? Press the button below to send your current location to the organizer immediately.</p>
+            <button class="sos-btn" onclick="triggerEmergency()">SOS</button>
+        </div>
+    </div>
+
+    <footer>© 2026 UrbanPace Run Movement. All Rights Reserved.</footer>
+
+    <script>
+        function toggleNav() {
+            var nav = document.getElementById("sideNav");
+            nav.style.width = (nav.style.width === "250px") ? "0" : "250px";
+        }
+
+        function triggerEmergency() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    const lat = position.coords.latitude;
+                    const lon = position.coords.longitude;
+                    const mapLink = `https://www.google.com/maps?q=${lat},${lon}`;
+                    sendSOS(mapLink);
+                }, function() {
+                    alert("Location access denied. Opening WhatsApp without coordinates.");
+                    sendSOS("Location hidden by user.");
+                });
+            } else {
+                alert("Geolocation is not supported by this browser.");
+                sendSOS("Location not supported.");
+            }
+        }
+
+        function sendSOS(locationData) {
+            const phone = "60182031549";
+            const message = encodeURIComponent(
+                `🚨 *URGENT EMERGENCY SOS* 🚨\n\n` +
+                `A runner needs immediate assistance!\n` +
+                `*Status:* Medical/Emergency alert triggered.\n` +
+                `*Location Data:* ${locationData}\n\n` +
+                `Please respond immediately!`
+            );
+            window.location.href = `https://wa.me/${phone}?text=${message}`;
+        }
+    </script>
+</body>
+</html>

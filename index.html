@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UrbanPace | Home</title>
+    <style>
+        /* Import Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&family=Open+Sans:wght@400;600&family=Oswald:wght@500;700&display=swap');
+
+        :root { 
+            --crimson: #990000; 
+            --dark-bg: #111; }
+
+        body { 
+            font-family: 'Open Sans', sans-serif; 
+            margin: 0; 
+            line-height: 1.6; 
+            scroll-behavior: smooth; 
+            background-color: #f4f4f4; }
+
+        /* Navigation Sidebar */
+        .menu-btn { 
+            position: fixed; top: 20px; left: 20px; z-index: 1001; 
+            cursor: pointer; background: #000; padding: 10px; border-radius: 5px;  }
+        .menu-btn div { width: 25px; height: 3px; background: white; margin: 5px 0; transition: 0.4s; }
+        
+        .side-nav { 
+            height: 100%; width: 0; position: fixed; z-index: 1000; top: 0; left: 0; 
+            background-color: var(--dark-bg); overflow-x: hidden; transition: 0.5s; padding-top: 60px; }
+        .side-nav a { 
+            padding: 15px 30px; text-decoration: none; font-size: 1rem; color: #818181; 
+            display: block; transition: 0.3s; font-family: 'Oswald', sans-serif; text-transform: uppercase; }
+        .side-nav a:hover { color: white; background: var(--crimson); }
+
+        /* --- Unlimited Moving Text Style --- */
+        .marquee-wrapper {
+            width: 100%; overflow: hidden; white-space: nowrap; 
+            position: absolute; top: 20%; z-index: 1; display: flex;}
+        .marquee-text {
+            display: flex; animation: move-text 12s linear infinite;
+            font-size: 3.5rem; font-weight: 900; 
+            font-family: 'Montserrat', sans-serif;
+            color: rgba(255, 255, 255, 0.15); 
+            text-transform: uppercase; letter-spacing: 15px; flex-shrink: 0; }
+        @keyframes move-text {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); } }
+
+        /* Hero Section */
+        .hero { 
+            position: relative; height: 85vh; 
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('homepage.jpg'); 
+            background-size: cover; background-position: center; 
+            display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; text-align: center; 
+            overflow: hidden; }
+        .hero h1 { 
+            font-family: 'Montserrat', sans-serif; font-size: 3.5rem; font-weight: 900;
+            margin: 0; text-transform: uppercase; letter-spacing: 3px; position: relative; z-index: 2; }
+        .hero p { 
+            font-family: 'Oswald', sans-serif; font-size: 1.2rem; font-weight: 400;
+            position: relative; z-index: 2; text-transform: uppercase; letter-spacing: 1px; }
+        .reg-btn { 
+            font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 1.1rem;
+            background: var(--crimson); color: white; padding: 15px 45px; text-decoration: none; border-radius: 5px; 
+            transition: 0.3s; margin-top: 20px; display: inline-block; text-transform: uppercase;
+            position: relative; z-index: 2; letter-spacing: 1px; }
+        .reg-btn:hover { background: white; color: var(--crimson); transform: scale(1.05); }
+
+        /* WhatsApp */
+        .whatsapp-float { position: fixed; bottom: 30px; right: 30px; z-index: 1002; transition: 0.3s; }
+        .whatsapp-float img { width: 60px; height: 60px; border-radius: 50%; box-shadow: 0 4px 15px rgba(0,0,0,0.4); }
+
+        .container { max-width: 1000px; margin: 40px auto; padding: 20px; }
+
+        /* Accordion */
+        .collapsible { 
+            font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 1px;
+            background-color: #222; color: white; cursor: pointer; padding: 20px; width: 100%; border: none; 
+            text-align: left; font-size: 1.1rem; font-weight: 700; margin-bottom: 5px; display: flex; 
+            justify-content: space-between; align-items: center; border-left: 5px solid var(--crimson); transition: 0.3s;}
+        .active, .collapsible:hover { background-color: var(--crimson); }
+        .content { padding: 0 25px; display: none; background-color: white; border: 1px solid #ddd; margin-bottom: 15px; }
+        .content p { font-size: 1rem; color: #444; }
+
+        /* Entitlement Grid */
+        .collage-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; padding: 25px 0; }
+        .collage-grid img { width: 100%; height: auto; border-radius: 8px; cursor: pointer; transition: 0.4s; border: 1px solid #eee; }
+        .collage-grid img:hover { transform: translateY(-5px); border-color: var(--crimson); }
+
+        /* Modal Pop-up */
+        .modal { display: none; position: fixed; z-index: 2000; padding-top: 50px; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); overflow: auto; }
+        .modal-content-container { 
+            margin: auto; display: block; width: 90%; max-width: 800px; background: white; 
+            border-radius: 10px; border: 3px solid var(--crimson); padding: 20px; position: relative; }
+        .modal-content-container h2 { font-family: 'Montserrat', sans-serif; font-weight: 900; text-transform: uppercase; text-align: center; color: var(--crimson); }
+        .close { position: absolute; top: 10px; right: 20px; color: #000; font-size: 40px; cursor: pointer; font-weight: bold; }
+
+        /* Schedule Table in Modal */
+        .schedule-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-family: 'Open Sans', sans-serif; }
+        .schedule-table th { background: var(--crimson); color: white; padding: 12px; font-family: 'Oswald', sans-serif; text-transform: uppercase; }
+        .schedule-table td { border: 1px solid #ddd; padding: 12px; text-align: center; color: #333; font-weight: 600; }
+
+        /* RPC Table */
+        table.rpc-table { width: 100%; border-collapse: collapse; margin: 25px 0; font-family: 'Open Sans', sans-serif; }
+        table.rpc-table th, table.rpc-table td { border: 1px solid #ddd; padding: 15px; text-align: center; }
+        table.rpc-table th { background-color: var(--crimson); color: white; font-family: 'Oswald', sans-serif; text-transform: uppercase; }
+        table.rpc-table td { font-weight: 600; color: #333; }
+
+        footer { 
+            font-family: 'Oswald', sans-serif; letter-spacing: 1px;
+            background: #000; color: #888; text-align: center; padding: 30px; margin-top: 50px; border-top: 3px solid var(--crimson); }
+    </style>
+</head>
+<body>
+
+    <div class="menu-btn" onclick="toggleNav()">
+        <div></div><div></div><div></div>
+    </div>
+
+    <div id="sideNav" class="side-nav">
+        <a href="index.html">1. Home</a>
+        <a href="register.html">2. Registration</a>
+        <a href="products.html">3. Products</a>
+        <a href="contact.html">4. Contact Us</a>
+    </div>
+
+    <a href="https://wa.me/60182031549" class="whatsapp-float" target="_blank">
+        <img src="logo whatsapp.jpg" alt="WhatsApp Support">
+    </a>
+
+    <div class="hero">
+        <div class="marquee-wrapper">
+            <div class="marquee-text">URBANPACE URBANPACE URBANPACE URBANPACE URBANPACE </div>
+            <div class="marquee-text">URBANPACE URBANPACE URBANPACE URBANPACE URBANPACE </div>
+        </div>
+
+        <h1>Your Race Begins Here</h1>
+        <p>Join our races and embrace an active lifestyle</p>
+        <a href="register.html" class="reg-btn">Register Now</a>
+    </div>
+
+    <div class="container">
+        <button class="collapsible">EVENT OVERVIEW <span class="arrow">▼</span></button>
+        <div class="content">
+            <p style="text-align: justify; padding: 20px 0;">
+                Our mission is to ignite a passion for fitness and community through an exhilarating running experience designed for everyone. We believe that running is more than just a sport; it is a journey toward holistic well-being and a testament to personal perseverance. By bringing together people from all walks of life, our event creates a vibrant space where energy meets purpose, and every stride contributes to a collective movement of positivity and health.<br><br>
+                We are dedicated to delivering a high-quality event that goes beyond the finish line. Whether you are a seasoned marathoner or a first-time runner, we aim to provide an inclusive and energizing environment that motivates you to push your limits. Join us as we transform the streets into a celebration of active living, fostering social unity and promoting a sustainable, healthy lifestyle for a better tomorrow. This is not just a race—it is where your journey to a stronger, faster, and healthier version of yourself begins.
+            </p>
+        </div>
+
+        <button class="collapsible">RACER ENTITLEMENTS <span class="arrow">▼</span></button>
+        <div class="content">
+            <div class="collage-grid">
+                <img src="flyers.jpg" onclick="openModal('img', 'Poster.jpg')" alt="Event Flyers">
+                <img src="brochure.jpg" onclick="openModal('img', 'brochuredesign.jpg')" alt="Event Brochure">
+                <img src="bibdesignlogo.jpg" onclick="openModal('img', 'bibdesign.png')" alt="Bib Design">
+                <img src="schedulelogo.jpg" onclick="openModal('table')" alt="Event Schedule">
+                
+                <img src="routelogo.jpg" onclick="openModal('img', 'maps.png')" alt="Race Route">
+                <img src="certlogo.jpg" onclick="openModal('img', 'cert.jpg')" alt="E-Certificate">
+                <img src="medallogo.jpg" onclick="openModal('img', 'Medaldesign.jpg')" alt="Finisher Medal">
+                <img src="shirtchartlogo.jpg" onclick="openModal('img', 'size chart.webp')" alt="Size Chart">
+                <img src="eventshirtlogo.jpg" onclick="openModal('img', 'design baju - Copy.jpg')" alt="Event Shirt Design">
+            </div>
+        </div>
+
+        <button class="collapsible">RACE PACK COLLECTION<span class="arrow">▼</span></button>
+        <div class="content">
+            <table class="rpc-table">
+                <tr><th>Date</th><th>Time</th><th>Venue</th></tr>
+                <tr><td>7 March 2026</td><td>2:00 PM - 10:00 PM</td><td>Car Park B, National Stadium Bukit Jalil</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <div id="imgModal" class="modal">
+        <div class="modal-content-container">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <footer>&copy; 2026 UrbanPace. All Rights Reserved.</footer>
+
+    <script>
+        function toggleNav() {
+            var nav = document.getElementById("sideNav");
+            nav.style.width = (nav.style.width === "250px") ? "0" : "250px";}
+
+        var coll = document.getElementsByClassName("collapsible");
+        for (var i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                content.style.display = (content.style.display === "block") ? "none" : "block";
+            });}
+
+        var modal = document.getElementById("imgModal");
+        var modalBody = document.getElementById("modalBody");
+
+        function openModal(type, src) {
+            modal.style.display = "block";
+            if (type === 'img') {
+                modalBody.innerHTML = `<img src="${src}" style="width:100%; border-radius:5px;">`;
+                 } else if (type === 'table') {
+                modalBody.innerHTML = `
+                    <h2>EVENT ITINERARY</h2>
+                    <table class="schedule-table">
+                        <tr><th>Time</th><th>Activity</th></tr>
+                        <tr><td>05:00 AM</td><td>Arrival of Participants</td></tr>
+                        <tr><td>05:30 AM</td><td>Race Site & Drop Bag Open </td></tr>
+                        <tr><td>05:45 AM</td><td>Warm-up Session</td></tr>
+                        <tr><td>06:15 AM</td><td>Flag Off</td></tr>
+                        <tr><td>10:00 AM</td><td>Finisher Cut-Off</td></tr>
+                        <tr><td>11:00 AM</td><td>End of Event</td></tr>
+                    </table>
+                `; }}
+
+        function closeModal() { modal.style.display = "none"; }
+        window.onclick = function(event) { if (event.target == modal) closeModal(); }
+    </script>
+</body>
+</html>

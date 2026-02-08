@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UrbanPace | Official Shop</title>
+    <style>
+        /* Import Fonts yang sama dengan Page 1 */
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Open+Sans:wght@400;600&family=Oswald:wght@500;700&display=swap');
+
+        :root { --crimson: #990000; --overlay: rgba(0, 0, 0, 0.8); }
+        
+        body { 
+            font-family: 'Open Sans', sans-serif; 
+            margin: 0; 
+            background: url('Homepage.jpg') no-repeat center center fixed; 
+            background-size: cover; 
+            color: white; 
+        }
+
+        .bg-overlay { background: var(--overlay); min-height: 100vh; padding: 40px 20px; box-sizing: border-box; }
+
+        /* Menu */
+        .menu-btn { position: fixed; top: 20px; left: 20px; z-index: 1001; cursor: pointer; background: var(--crimson); padding: 10px; border-radius: 5px; }
+        .menu-btn div { width: 25px; height: 3px; background: white; margin: 5px; }
+        .side-nav { height: 100%; width: 0; position: fixed; z-index: 1000; top: 0; left: 0; background: #111; overflow-x: hidden; transition: 0.5s; padding-top: 60px; }
+        .side-nav a { padding: 15px 30px; text-decoration: none; font-size: 1.1rem; color: #ccc; display: block; font-family: 'Oswald', sans-serif; text-transform: uppercase; }
+        .side-nav a:hover { background: var(--crimson); color: white; }
+
+        .container { max-width: 1000px; margin: 40px auto; background: white; color: #333; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        
+        h1 { 
+            color: var(--crimson); 
+            text-align: center; 
+            text-transform: uppercase; 
+            margin-bottom: 30px; 
+            font-family: 'Montserrat', sans-serif; 
+            font-weight: 900; 
+            letter-spacing: 2px;
+        }
+
+        /* Product Grid */
+        .shop-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+        .product-card { border: 1px solid #eee; padding: 15px; border-radius: 10px; text-align: center; transition: 0.3s; background: #fff; }
+        .product-card:hover { transform: translateY(-5px); border-color: var(--crimson); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        
+        .product-card h3 { 
+            font-family: 'Oswald', sans-serif; 
+            text-transform: uppercase; 
+            font-size: 1.1rem; 
+            margin: 10px 0;
+        }
+
+        /* Image Box */
+        .img-box { width: 100%; height: 180px; background: #fff; border-radius: 8px; margin-bottom: 10px; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 1px solid #f0f0f0; }
+        .img-box img { max-width: 100%; max-height: 100%; object-fit: contain; }
+
+        /* Form Styling */
+        .checkout-section { margin-top: 50px; padding-top: 30px; border-top: 3px solid var(--crimson); display: none; }
+        
+        h2, h3 { font-family: 'Montserrat', sans-serif; font-weight: 800; text-transform: uppercase; }
+
+        label { 
+            display: block; 
+            margin-top: 15px; 
+            font-weight: 600; 
+            font-family: 'Oswald', sans-serif; 
+            text-transform: uppercase; 
+            font-size: 0.85rem;
+            color: #444;
+        }
+        input, select, textarea { 
+            width: 100%; 
+            padding: 12px; 
+            margin-top: 5px; 
+            border: 1px solid #ccc; 
+            border-radius: 5px; 
+            box-sizing: border-box; 
+            font-size: 1rem; 
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .btn { 
+            background: var(--crimson); 
+            color: white; 
+            padding: 15px; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            font-size: 1rem; 
+            font-weight: bold; 
+            width: 100%; 
+            margin-top: 20px; 
+            transition: 0.3s; 
+            font-family: 'Oswald', sans-serif; 
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .btn:hover { background: #700000; transform: translateY(-2px); }
+
+        /* Slip Designs */
+        #slip-area { display: none; color: #000; }
+        .slip-post { border: 4px solid #333; padding: 30px; background: #fff; position: relative; font-family: 'Open Sans', sans-serif; }
+        .slip-post h1 { font-family: 'Montserrat', sans-serif; }
+        .slip-post::after { content: "🚚 SHIPMENT"; position: absolute; top: 10px; right: 10px; font-weight: bold; opacity: 0.1; font-size: 2.5rem; font-family: 'Montserrat'; }
+        
+        .slip-pickup { border: 4px dashed var(--crimson); padding: 30px; background: #fff; font-family: 'Open Sans', sans-serif; }
+        .slip-pickup h2 { color: var(--crimson); text-align: center; font-family: 'Montserrat', sans-serif; }
+
+        @media print { .bg-overlay * { visibility: hidden; } #slip-area, #slip-area * { visibility: visible; } #slip-area { position: absolute; left: 0; top: 0; width: 100%; } .btn { display: none; } }
+    </style>
+</head>
+<body>
+
+<div class="bg-overlay">
+    <div class="menu-btn" onclick="toggleNav()"><div></div><div></div><div></div></div>
+    <div id="sideNav" class="side-nav">
+        <a href="index.html">Home</a>
+        <a href="register.html">Registration</a>
+        <a href="product.html">Product & Service</a>
+        <a href="contact.html">Contact Us</a>
+    </div>
+
+    <div class="container" id="main-content">
+        <h1>Official Merchandise</h1>
+        
+        <div class="shop-grid">
+            <script>
+                const items = [
+                    {n: 'Energy Gel', p: 10, img: 'energygel.jpg'}, 
+                    {n: 'Energy Drink', p: 5, img: 'energy drink.jpg'}, 
+                    {n: 'Energy Bar', p: 8, img: 'energybar.jpg'},
+                    {n: 'Running Shoes', p: 299, img: 'runningshoes.jpg'}, 
+                    {n: 'Running Cap', p: 45, img: 'cap.jpg'}, 
+                    {n: 'Hydration Waterbag', p: 85, img: 'waterbag.jpg'},
+                    {n: 'Compression Support', p: 15, img: 'compressionsupport.jpg'}, 
+                    {n: 'Running Tights', p: 75, img: 'tight.jpg'},
+                    {n: 'Sports Sunglasses', p: 65, img: 'spec.jpg'},
+                    {n: 'Smart Running Watch', p: 199, img: 'watch.jpg'}
+                ];
+
+                items.forEach(item => {
+                    document.write(`
+                        <div class="product-card">
+                            <div class="img-box">
+                                <img src="${item.img}" alt="${item.n}" onerror="this.src='https://via.placeholder.com/150?text=No+Image'">
+                            </div>
+                            <h3>${item.n}</h3>
+                            <p style="color:var(--crimson); font-weight:bold; font-size:1.2rem; font-family:'Montserrat'">RM ${item.p}</p>
+                            <button class="btn" onclick="addToCart('${item.n}', ${item.p})">Add to Cart</button>
+                        </div>
+                    `);
+                });
+            </script>
+        </div>
+
+        <div class="checkout-section" id="checkout-form">
+            <h2 style="color:var(--crimson)">Order Summary</h2>
+            <div id="cart-list" style="background:#f9f9f9; padding:15px; border-radius:8px; font-family:'Open Sans'"></div>
+            <p style="font-size:1.3rem; font-family:'Oswald'">Total: <strong style="color:var(--crimson); font-family:'Montserrat'">RM <span id="cart-total">0</span></strong></p>
+
+            <h3>Customer Details</h3>
+            <label>Full Name</label>
+            <input type="text" id="custName" placeholder="Full name for order" required>
+            
+            <label>Phone Number</label>
+            <input type="text" id="custPhone" placeholder="Example: 0123456789" required>
+
+            <label>Delivery Method</label>
+            <select id="delMethod" onchange="updateTotalWithPostage()">
+                <option value="Pickup">Pickup at Race Site (Free)</option>
+                <option value="Postage">Postage (+RM 10.00)</option>
+            </select>
+
+            <label id="addrLabel">Address (Required for Postage)</label>
+            <textarea id="custAddr" rows="3" placeholder="Enter full address"></textarea>
+
+            <label>Payment Method</label>
+            <select id="payBank">
+                <option>Maybank2u</option>
+                <option>CIMB Clicks</option>
+                <option>Bank Islam</option>
+                <option>FPX Online Banking</option>
+            </select>
+
+            <button class="btn" style="background:#28a745" onclick="processShopPayment()">PAY NOW</button>
+        </div>
+    </div>
+
+    <div id="slip-area" class="container">
+        <div id="slip-content"></div>
+        <button class="btn" onclick="window.print()">PRINT SLIP</button>
+        <button class="btn" style="background:#666" onclick="location.reload()">BACK TO SHOP</button>
+    </div>
+</div>
+
+<script>
+    function toggleNav() {
+        var s = document.getElementById("sideNav");
+        s.style.width = (s.style.width === "250px") ? "0" : "250px";
+    }
+
+    let cart = [];
+    let baseTotal = 0;
+
+    function addToCart(name, price) {
+        cart.push({name, price});
+        baseTotal += price;
+        renderCart();
+        document.getElementById('checkout-form').style.display = 'block';
+        window.scrollTo({ top: document.getElementById('checkout-form').offsetTop, behavior: 'smooth' });
+    }
+
+    function renderCart() {
+        const list = document.getElementById('cart-list');
+        list.innerHTML = cart.map(i => `<div style="display:flex; justify-content:space-between; margin-bottom:5px;"><span>${i.name}</span><strong>RM ${i.price}</strong></div>`).join('');
+        updateTotalWithPostage();
+    }
+
+    function updateTotalWithPostage() {
+        let postage = document.getElementById('delMethod').value === "Postage" ? 10 : 0;
+        document.getElementById('cart-total').innerText = (baseTotal + postage).toFixed(2);
+    }
+
+    function processShopPayment() {
+        const name = document.getElementById('custName').value;
+        const method = document.getElementById('delMethod').value;
+        const total = document.getElementById('cart-total').innerText;
+        const itemsList = cart.map(i => i.name).join(", ");
+
+        if(!name) { alert("Please enter your name"); return; }
+
+        let slipHtml = "";
+
+        if(method === "Postage") {
+            slipHtml = `
+                <div class="slip-post">
+                    <h1 style="color:var(--crimson)">URBANPACE DELIVERY ORDER</h1>
+                    <p><strong>Order ID:</strong> UP-SHOP-${Math.floor(1000 + Math.random()*8999)}</p>
+                    <hr>
+                    <p><strong>Customer:</strong> ${name.toUpperCase()}</p>
+                    <p><strong>Contact:</strong> ${document.getElementById('custPhone').value}</p>
+                    <p><strong>Shipping Address:</strong><br>${document.getElementById('custAddr').value || 'N/A'}</p>
+                    <p><strong>Items:</strong> ${itemsList}</p>
+                    <h2 style="text-align:right; color:var(--crimson); font-family:'Montserrat'">PAID: RM ${total}</h2>
+                </div>
+            `;
+        } else {
+            slipHtml = `
+                <div class="slip-pickup">
+                    <h2>URBANPACE PICKUP VOUCHER</h2>
+                    <p style="text-align:center; font-style:italic;">Show this slip at Race Pack Collection counter</p>
+                    <hr>
+                    <p><strong>Collector Name:</strong> ${name.toUpperCase()}</p>
+                    <p><strong>Phone:</strong> ${document.getElementById('custPhone').value}</p>
+                    <p><strong>Items:</strong> ${itemsList}</p>
+                    <p><strong>Pickup Venue:</strong> Car Park B, Bukit Jalil National Stadium</p>
+                    <h2 style="text-align:center; color:var(--crimson); font-family:'Montserrat'">STATUS: PAID ONLINE (RM ${total})</h2>
+                </div>
+            `;
+        }
+
+        document.getElementById('main-content').style.display = 'none';
+        document.getElementById('slip-area').style.display = 'block';
+        document.getElementById('slip-content').innerHTML = slipHtml;
+    }
+</script>
+
+</body>
+</html>
