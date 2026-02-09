@@ -96,6 +96,13 @@
         .modal-content-container h2 { font-family: 'Montserrat', sans-serif; font-weight: 900; text-transform: uppercase; text-align: center; color: var(--crimson); }
         .close { position: absolute; top: 10px; right: 20px; color: #000; font-size: 40px; cursor: pointer; font-weight: bold; }
 
+        /* Flip Card Animation */
+        .flip-card { background-color: transparent; width: 100%; perspective: 1000px; cursor: pointer; margin-top: 10px; }
+        .flip-card-inner { position: relative; width: 100%; transition: transform 0.6s; transform-style: preserve-3d; }
+        .flipped { transform: rotateY(180deg); }
+        .flip-card-front, .flip-card-back { width: 100%; backface-visibility: hidden; border-radius: 5px; }
+        .flip-card-back { position: absolute; top: 0; left: 0; transform: rotateY(180deg); }
+
         /* Schedule Table in Modal */
         .schedule-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-family: 'Open Sans', sans-serif; }
         .schedule-table th { background: var(--crimson); color: white; padding: 12px; font-family: 'Oswald', sans-serif; text-transform: uppercase; }
@@ -153,10 +160,10 @@
         <div class="content">
             <div class="collage-grid">
                 <img src="flyers.jpg" onclick="openModal('img', 'poster.jpg')" alt="Event Flyers">
-                <img src="brochure.jpg" onclick="openModal('img', 'brochuredesign.jpg')" alt="Event Brochure">
+                <img src="brochure.jpg" onclick="openModal('brochure')" alt="Event Brochure">
+                
                 <img src="bibdesignlogo.jpg" onclick="openModal('img', 'bibdesign.png')" alt="Bib Design">
                 <img src="schedulelogo.jpg" onclick="openModal('table')" alt="Event Schedule">
-                
                 <img src="routelogo.jpg" onclick="openModal('img', 'maps.png')" alt="Race Route">
                 <img src="certlogo.jpg" onclick="openModal('img', 'cert.jpg')" alt="E-Certificate">
                 <img src="medallogo.jpg" onclick="openModal('img', 'Medaldesign.jpg')" alt="Finisher Medal">
@@ -202,8 +209,23 @@
         function openModal(type, src) {
             modal.style.display = "block";
             if (type === 'img') {
-                modalBody.innerHTML = `<img src="${src}" style="width:100%; border-radius:5px;">`;
-                 } else if (type === 'table') {
+                modalBody.innerHTML = `<img src="${src}" style="width:80%; display:block; margin:auto; border-radius:5px;">`;
+            } else if (type === 'brochure') {
+                modalBody.innerHTML = `
+                    <h2>EVENT BROCHURE</h2>
+                    <p style="text-align:center; color:gray; font-size:0.8rem; margin-bottom:10px;">Click the image to flip</p>
+                    <div class="flip-card" onclick="this.querySelector('.flip-card-inner').classList.toggle('flipped')">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <img src="brochuredesign.jpg" style="width:80%; display:block; margin:auto; border-radius:5px; border:1px solid #ddd;">
+                            </div>
+                            <div class="flip-card-back">
+                                <img src="brochureee.jpg" style="width:80%; display:block; margin:auto; border-radius:5px; border:1px solid #ddd;">
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else if (type === 'table') {
                 modalBody.innerHTML = `
                     <h2>EVENT ITINERARY</h2>
                     <table class="schedule-table">
@@ -215,14 +237,16 @@
                         <tr><td>10:00 AM</td><td>Finisher Cut-Off</td></tr>
                         <tr><td>11:00 AM</td><td>End of Event</td></tr>
                     </table>
-                `; }}
+                `; 
+            }
+        }
 
         function closeModal() { modal.style.display = "none"; }
         window.onclick = function(event) { if (event.target == modal) closeModal(); }
     </script>
 </body>
-
 </html>
+
 
 
 
